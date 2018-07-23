@@ -5,6 +5,9 @@ package com.company.buffer_channel;
  * @Description:
  * @date 9:15 2018/7/19
  */
+
+import org.junit.Test;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +17,6 @@ import java.nio.CharBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
-import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
@@ -23,8 +25,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import org.junit.Test;
 
 /*
  * 一、通道（Channel）：用于源节点与目标节点的连接。在 Java NIO 中负责缓冲区中数据的传输。Channel 本身不存储数据，因此需要配合缓冲区进行传输。
@@ -67,7 +67,7 @@ public class TestChannel {
 
     //字符集
     @Test
-    public void test6() throws IOException{
+    public void test6() throws IOException {
         Charset cs1 = Charset.forName("GBK");
 
         //获取编码器
@@ -101,7 +101,7 @@ public class TestChannel {
     }
 
     @Test
-    public void test5(){
+    public void test5() {
         Map<String, Charset> map = Charset.availableCharsets();
 
         Set<Entry<String, Charset>> set = map.entrySet();
@@ -113,7 +113,7 @@ public class TestChannel {
 
     //分散和聚集
     @Test
-    public void test4() throws IOException{
+    public void test4() throws IOException {
         RandomAccessFile raf1 = new RandomAccessFile("1.txt", "rw");
 
         //1. 获取通道
@@ -144,7 +144,7 @@ public class TestChannel {
 
     //通道之间的数据传输(直接缓冲区)
     @Test
-    public void test3() throws IOException{
+    public void test3() throws IOException {
         FileChannel inChannel = FileChannel.open(Paths.get("d:/1.mkv"), StandardOpenOption.READ);
         FileChannel outChannel = FileChannel.open(Paths.get("d:/2.mkv"), StandardOpenOption.WRITE, StandardOpenOption.READ, StandardOpenOption.CREATE);
 
@@ -157,7 +157,7 @@ public class TestChannel {
 
     //使用直接缓冲区完成文件的复制(内存映射文件)
     @Test
-    public void test2() throws IOException{//2127-1902-1777
+    public void test2() throws IOException {//2127-1902-1777
         long start = System.currentTimeMillis();
 
         FileChannel inChannel = FileChannel.open(Paths.get("d:/1.mkv"), StandardOpenOption.READ);
@@ -181,7 +181,7 @@ public class TestChannel {
 
     //利用通道完成文件的复制（非直接缓冲区）
     @Test
-    public void test1(){//10874-10953
+    public void test1() {//10874-10953
         long start = System.currentTimeMillis();
 
         FileInputStream fis = null;
@@ -200,7 +200,7 @@ public class TestChannel {
             ByteBuffer buf = ByteBuffer.allocate(1024);
 
             //③将通道中的数据存入缓冲区中
-            while(inChannel.read(buf) != -1){
+            while (inChannel.read(buf) != -1) {
                 buf.flip(); //切换读取数据的模式
                 //④将缓冲区中的数据写入通道中
                 outChannel.write(buf);
@@ -209,7 +209,7 @@ public class TestChannel {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if(outChannel != null){
+            if (outChannel != null) {
                 try {
                     outChannel.close();
                 } catch (IOException e) {
@@ -217,7 +217,7 @@ public class TestChannel {
                 }
             }
 
-            if(inChannel != null){
+            if (inChannel != null) {
                 try {
                     inChannel.close();
                 } catch (IOException e) {
@@ -225,7 +225,7 @@ public class TestChannel {
                 }
             }
 
-            if(fos != null){
+            if (fos != null) {
                 try {
                     fos.close();
                 } catch (IOException e) {
@@ -233,7 +233,7 @@ public class TestChannel {
                 }
             }
 
-            if(fis != null){
+            if (fis != null) {
                 try {
                     fis.close();
                 } catch (IOException e) {
@@ -248,4 +248,3 @@ public class TestChannel {
     }
 
 }
-

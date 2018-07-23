@@ -9,8 +9,5 @@
         <module name="JavaNio" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="JavaNio" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
